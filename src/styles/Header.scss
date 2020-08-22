@@ -1,0 +1,39 @@
+@import './utils.scss';
+
+header {
+  position: fixed;
+  height: 80px;
+  width: 100vw;
+  background-color: white;
+  box-shadow: rgb(238, 238, 238) 0px 1px 0px 0px;
+
+  .header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .logo-wrap {
+    font-weight: 800;
+    font-size: 2em;
+  }
+
+  .menu-list {
+    display: flex;
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-left: 2.5rem;
+
+    li {
+      margin-right: 2rem;
+      a:hover {
+        color: $color_main_accent;
+      }
+    }
+  }
+
+  .utils {
+    margin-left: auto;
+  }
+}

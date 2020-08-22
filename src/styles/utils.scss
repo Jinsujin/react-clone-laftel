@@ -1,0 +1,10 @@
+$color_main_accent: rgb(129, 107, 255);
+$color_main_text_bold: rgb(40, 42, 53);
+$color_text_contents: #495057;
+$color_red: red;
+
+@mixin square($size) {
+  $calculated: 32px * $size;
+  width: $calculated;
+  height: $calculated;
+}
