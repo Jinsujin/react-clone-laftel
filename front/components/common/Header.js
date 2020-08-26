@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
+import palette from '../../lib/palette';
+import LoginForm from '../LoginForm';
+import UserProfile from './UserProfile';
 
 const HeaderWrapper = styled.header`
+  z-index: 999999;
   position: fixed;
   width: 100vw;
   background-color: white;
@@ -20,6 +24,9 @@ const Wrapper = styled(Responsive)`
 const LogoWrapper = styled.div`
   font-weight: 800;
   font-size: 2em;
+  a:hover {
+    color: inherit;
+  }
 `;
 
 const MenulistWrapper = styled.ul`
@@ -31,13 +38,17 @@ const MenulistWrapper = styled.ul`
   li {
     margin-right: 2rem;
     a:hover {
-      color: $color_main_accent;
+      color: ${palette.violet[7]};
     }
   }
 `;
 
 const UtilsBlock = styled.div`
   margin-left: auto;
+  width: 50%;
+  a:hover {
+    color: ${palette.violet[7]};
+  }
 `;
 
 // 헤더가 fixed 로 되어있어, 페이지의 컨텐츠가 4rem 아래서 나타나게 해주는 컴포넌트
@@ -46,6 +57,10 @@ const Spacer = styled.div`
 `;
 
 const Header = () => {
+  // const [selectedMenu, setSelectedMenu] = useState('');
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <>
       <HeaderWrapper>
@@ -79,7 +94,16 @@ const Header = () => {
               </Link>
             </li>
           </MenulistWrapper>
-          <UtilsBlock>로그인/가입</UtilsBlock>
+          <UtilsBlock>
+            {/* <Link href="/login">
+              <a>로그인/가입</a>
+            </Link> */}
+            {isLoggedIn ? (
+              <UserProfile setIsLoggedIn={setIsLoggedIn} />
+            ) : (
+              <LoginForm setIsLoggedIn={setIsLoggedIn} />
+            )}
+          </UtilsBlock>
         </Wrapper>
       </HeaderWrapper>
       <Spacer />
