@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Button, Card } from 'antd';
 // import { StopOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
+
+const ListWrapper = styled(List)`
+  font-weight: bold;
+  font-size: 2em;
+`;
 
 const NewAnimationList = ({ header, data }) => {
   return (
-    <List
+    <ListWrapper
       style={{ marginBottom: 20 }}
       grid={{ gutter: 4, xs: 2, md: 3 }}
       size="small"

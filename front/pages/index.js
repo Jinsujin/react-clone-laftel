@@ -43,6 +43,7 @@ const Home = () => {
         data={newAnimationList}
       />
       <NewAnimationList header="따끈따끈 신작 랭킹" data={newAnimationList} />
+      <NewAnimationList header="역대 인기 애니" data={newAnimationList} />
     </AppLayout>
   );
 };
