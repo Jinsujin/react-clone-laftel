@@ -88,8 +88,8 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/voucher">
-                <a>멤버쉽</a>
+              <Link href="/add">
+                <a>관리자</a>
               </Link>
             </li>
           </MenulistWrapper>

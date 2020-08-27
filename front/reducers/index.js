@@ -1,9 +1,11 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 import user from './user';
+import animation from './animation';
 
 const initialState = {
   user: {},
+  animation: {},
 };
 
 const rootReducer = combineReducers({
@@ -17,6 +19,7 @@ const rootReducer = combineReducers({
     }
   },
   user,
+  animation,
 });
 
 export default rootReducer;

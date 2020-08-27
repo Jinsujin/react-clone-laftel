@@ -29,7 +29,7 @@ const NewAnimationList = ({ header, data }) => {
             hoverable
             style={{ width: 200 }}
             // actions={[<StopOutlined key="stop" />]}
-            cover={<img alt="example" src={item.imgUrl} />}
+            cover={<img alt="example" src={item.thumbnailImage} />}
           >
             <Card.Meta title={item.genre} description={item.title} />
           </Card>
