@@ -3,10 +3,13 @@ import { Form, Button, Input, Row, Col } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Responsive from '../components/common/Responsive';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers/user';
 
 const LoginFormBlock = styled(Responsive)``;
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,7 +24,8 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const onSubmitForm = useCallback(
     e => {
       console.log(id, password);
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
+      dispatch(loginAction());
     },
     [id, password],
   );

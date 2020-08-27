@@ -5,6 +5,7 @@ import Responsive from '../common/Responsive';
 import palette from '../../lib/palette';
 import LoginForm from '../LoginForm';
 import UserProfile from './UserProfile';
+import { useSelector } from 'react-redux';
 
 const HeaderWrapper = styled.header`
   z-index: 999999;
@@ -57,9 +58,7 @@ const Spacer = styled.div`
 `;
 
 const Header = () => {
-  // const [selectedMenu, setSelectedMenu] = useState('');
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useSelector(state => state.user);
 
   return (
     <>
@@ -98,11 +97,7 @@ const Header = () => {
             {/* <Link href="/login">
               <a>로그인/가입</a>
             </Link> */}
-            {isLoggedIn ? (
-              <UserProfile setIsLoggedIn={setIsLoggedIn} />
-            ) : (
-              <LoginForm setIsLoggedIn={setIsLoggedIn} />
-            )}
+            {isLoggedIn ? <UserProfile /> : <LoginForm />}
           </UtilsBlock>
         </Wrapper>
       </HeaderWrapper>
