@@ -46,7 +46,6 @@ const MenulistWrapper = styled.ul`
 
 const UtilsBlock = styled.div`
   margin-left: auto;
-  width: 50%;
   a:hover {
     color: ${palette.violet[7]};
   }
