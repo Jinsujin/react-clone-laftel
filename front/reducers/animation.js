@@ -73,7 +73,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ANI:
       const dummy = generateDummyAni(1);
-      console.log(dummy);
+      console.log(action.data);
       return {
         ...state,
         mainAnimations: [dummy[0], ...state.mainAnimations],

@@ -7,12 +7,13 @@ import {
   EllipsisOutlined,
   HeartTwoTone,
 } from '@ant-design/icons';
+import AniThumbnailImage from './AniThumbnailImage';
 
 const AnimationCard = ({ animation }) => {
   return (
     <div>
       <Card
-        cover={animation.thumbnailImage}
+        cover={<AniThumbnailImage image={animation.thumbnailImage} />}
         actions={[<RetweetOutlined key="retweet" />]}
       >
         <Card.Meta
