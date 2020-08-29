@@ -1,11 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Form, Button, Input } from 'antd';
+import { addAni } from '../../reducers/animation';
+import { useDispatch } from 'react-redux';
 
 const AddAnimationForm = () => {
-  const onSubmit = useCallback(() => {
-    console.log('저장');
-  }, []);
-
+  const dispatch = useDispatch();
   const [text, setText] = useState('');
   const onChangeText = useCallback(e => {
     setText(e.target.value);
@@ -16,6 +15,10 @@ const AddAnimationForm = () => {
   const onClickImageUpload = useCallback(() => {
     // imageInputEl.current.click(); // error
   }, [imageInputEl.current]);
+
+  const onSubmit = useCallback(() => {
+    dispatch(addAni(text));
+  }, [text]);
 
   return (
     <Form
@@ -33,7 +36,7 @@ const AddAnimationForm = () => {
         <Input type="file" multiple hidden ref={imageInputEl} />
         <Button onClick={onClickImageUpload}>이미지 업로드 </Button>
         <Button type="primary" style={{ float: 'right' }} htmlType="submit">
-          짹짹
+          작성
         </Button>
       </div>
     </Form>

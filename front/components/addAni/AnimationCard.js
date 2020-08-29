@@ -17,13 +17,11 @@ const AnimationCard = ({ animation }) => {
       >
         <Card.Meta
           avatar={<Avatar>{animation.User.nickname[0]}</Avatar>}
-          title={animation.User.nickname}
+          title={animation.title}
           description={animation.content}
         />
       </Card>
     </div>
-    // <ReviewForm />
-    // reviewList
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import Slider from 'react-slick';
 import styled, { createGlobalStyle } from 'styled-components';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '../addAni/@ant-design/icons';
 
 const GlobalStyled = createGlobalStyle`
   .slick-slider {

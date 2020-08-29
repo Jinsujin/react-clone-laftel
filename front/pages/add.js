@@ -1,8 +1,8 @@
 import React from 'react';
 import AppLayout from '../components/common/AppLayout';
 import { useSelector } from 'react-redux';
-import AddAnimationForm from '../components/addAnimation/AddAnimationForm';
-import AnimationCard from '../components/addAnimation/AnimationCard';
+import AddAnimationForm from '../components/addAni/AddAnimationForm';
+import AnimationCard from '../components/addAni/AnimationCard';
 
 const AddAnimation = () => {
   const { isLoggedIn } = useSelector(state => state.user);
