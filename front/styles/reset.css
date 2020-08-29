@@ -137,3 +137,17 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+button {
+  -webkit-font-smoothing: inherit;
+  appearance: none;
+  text-align: inherit;
+  outline: none;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  margin: 0px;
+  padding: 0px;
+  overflow: visible;
+}
