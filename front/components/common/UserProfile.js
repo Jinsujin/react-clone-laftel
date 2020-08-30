@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import Router from 'next/router';
-import { logoutAction } from '../../reducers/user';
+import { logoutRequestAction } from '../../reducers/user';
 
 const UserProfileWrapper = styled.div`
   /* display: flex;
@@ -21,9 +21,9 @@ const ColStyled = styled(Col)`
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const { me } = useSelector(state => state.user);
+  const { me, logOutLoading } = useSelector(state => state.user);
   const onLogout = useCallback(() => {
-    dispatch(logoutAction());
+    dispatch(logoutRequestAction());
   }, []);
 
   const onMyInfo = useCallback(() => {
@@ -34,7 +34,7 @@ const UserProfile = () => {
     <UserProfileWrapper>
       <Row gutter={16}>
         <ColStyled>
-          <span>닉네임111111 {me.nickname}</span>
+          <span>{me.nickname}</span>
         </ColStyled>
         <Col span={8}>
           <Button
@@ -47,7 +47,9 @@ const UserProfile = () => {
           </Button>
         </Col>
         <Col span={8}>
-          <Button onClick={onLogout}>로그아웃</Button>
+          <Button onClick={onLogout} loading={logOutLoading}>
+            로그아웃
+          </Button>
         </Col>
       </Row>
     </UserProfileWrapper>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AppLayout from '../components/common/AppLayout';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/common/LoginForm';
 import Head from 'next/head';
 
 const Login = () => {

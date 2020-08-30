@@ -3,11 +3,6 @@ import { combineReducers } from 'redux';
 import user from './user';
 import animation from './animation';
 
-const initialState = {
-  user: {},
-  animation: {},
-};
-
 const rootReducer = combineReducers({
   index: (state = {}, action) => {
     switch (action.type) {

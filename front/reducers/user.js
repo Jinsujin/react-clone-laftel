@@ -1,43 +1,91 @@
+import produce from 'immer';
+
 export const initialState = {
   isLoggedIn: false,
   me: null,
   signUpData: {},
   loginData: {},
+
+  logInLoading: false, // 로그인 시도중 - true 일때 로딩
+  logInDone: false,
+  logInError: null,
+
+  logOutLoading: false, // 로그아웃 시도중 - true 일때 로딩
+  logOutDone: false,
+  logOutError: null,
 };
+
+/**
+ * Action types
+ */
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
 /**
  * Action 생성 함수
  */
-export const loginAction = data => {
+export const loginRequestAction = data => {
   return {
-    type: 'LOG_IN',
+    type: LOG_IN_REQUEST,
     data,
   };
 };
 
-export const logoutAction = () => {
+export const logoutRequestAction = () => {
   return {
-    type: 'LOG_OUT',
+    type: LOG_OUT_REQUEST,
   };
 };
 
+const dummyUser = data => ({
+  ...data,
+  id: 1,
+  nickname: 'jinsu',
+  Posts: [{ id: 1 }],
+  Followings: [{ nickname: 'neue zeal' }],
+  Followers: [{ nickname: 'Chanho Lee' }, { nickname: 'neue zeal' }],
+});
+
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'LOG_IN':
-      return {
-        ...state.user,
-        isLoggedIn: true,
-        me: action.data,
-      };
-    case 'LOG_OUT':
-      return {
-        ...state.user,
-        isLoggedIn: false,
-        me: null,
-      };
-    default:
-      return state;
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case LOG_IN_REQUEST:
+        draft.logInLoading = true;
+        draft.logInDone = false;
+        draft.logInError = null;
+        break;
+      case LOG_IN_SUCCESS:
+        draft.logInLoading = false;
+        draft.logInDone = true;
+        draft.me = dummyUser(action.data);
+        break;
+      case LOG_IN_FAILURE:
+        draft.logInLoading = false;
+        draft.logInError = action.error;
+        break;
+      case LOG_OUT_REQUEST:
+        draft.logOutLoading = true;
+        draft.logOutDone = false;
+        draft.logOutError = null;
+        break;
+      case LOG_OUT_SUCCESS:
+        draft.logOutLoading = false;
+        draft.logOutDone = true;
+        draft.me = null;
+        break;
+      case LOG_OUT_FAILURE:
+        draft.logOutLoading = false;
+        draft.logOutError = action.error;
+        break;
+      default:
+        return state;
+    }
+  });
 };
 
 export default reducer;

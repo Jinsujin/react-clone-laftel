@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { Form, Button, Input, Row, Col } from 'antd';
 import Link from 'next/link';
 import styled, { createGlobalStyle } from 'styled-components';
-import Responsive from '../components/common/Responsive';
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers/user';
+import Responsive from './Responsive';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequestAction } from '../../reducers/user';
 
 const GlobalStyled = createGlobalStyle`
   .ant-col {
@@ -15,6 +15,7 @@ const GlobalStyled = createGlobalStyle`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { logInLoading } = useSelector(state => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,7 +30,7 @@ const LoginForm = () => {
   const onSubmitForm = useCallback(
     e => {
       console.log(email, password);
-      dispatch(loginAction({ email, password }));
+      dispatch(loginRequestAction({ email, password }));
     },
     [email, password],
   );
@@ -60,7 +61,7 @@ const LoginForm = () => {
             />
           </Col>
           <Col>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={logInLoading}>
               로그인
             </Button>
           </Col>

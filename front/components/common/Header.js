@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/palette';
-import LoginForm from '../LoginForm';
+import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
 import { useSelector } from 'react-redux';
 
@@ -57,7 +57,7 @@ const Spacer = styled.div`
 `;
 
 const Header = () => {
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { me } = useSelector(state => state.user);
 
   return (
     <>
@@ -92,12 +92,7 @@ const Header = () => {
               </Link>
             </li>
           </MenulistWrapper>
-          <UtilsBlock>
-            {/* <Link href="/login">
-              <a>로그인/가입</a>
-            </Link> */}
-            {isLoggedIn ? <UserProfile /> : <LoginForm />}
-          </UtilsBlock>
+          <UtilsBlock>{me ? <UserProfile /> : <LoginForm />}</UtilsBlock>
         </Wrapper>
       </HeaderWrapper>
       <Spacer />
