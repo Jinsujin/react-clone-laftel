@@ -5,12 +5,12 @@ import AddAnimationForm from '../components/addAni/AddAnimationForm';
 import AnimationCard from '../components/addAni/AnimationCard';
 
 const AddAnimation = () => {
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { me } = useSelector(state => state.user);
   const { mainAnimations } = useSelector(state => state.animation);
 
   return (
     <AppLayout>
-      {isLoggedIn && <AddAnimationForm />}
+      {me && <AddAnimationForm />}
       {mainAnimations.map(ani => (
         <AnimationCard key={ani.id} animation={ani} />
       ))}

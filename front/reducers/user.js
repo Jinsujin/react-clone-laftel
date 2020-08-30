@@ -26,6 +26,9 @@ export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
+// post 상태 에서 변화가 일어났을때 user 상태 변화
+export const ADD_ANI_TO_ME = 'ADD_ANI_TO_ME';
+
 /**
  * Action 생성 함수
  */
@@ -54,6 +57,9 @@ const dummyUser = data => ({
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case ADD_ANI_TO_ME:
+        draft.me.Posts.unshift({ id: action.data });
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInDone = false;
@@ -83,7 +89,7 @@ const reducer = (state = initialState, action) => {
         draft.logOutError = action.error;
         break;
       default:
-        return state;
+        break;
     }
   });
 };

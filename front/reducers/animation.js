@@ -1,5 +1,6 @@
 import faker from 'faker';
 import shortId from 'shortid';
+import produce from 'immer';
 
 export const generateDummyAni = number =>
   Array(number)
@@ -42,7 +43,7 @@ const dummyAnimation = data => ({
     id: 1,
     nickname: 'jinsu',
   },
-  title: '타이틀',
+  title: data.content,
   genre: '장르',
   content: '설명',
   summary: '줄거리',
@@ -56,32 +57,53 @@ const dummyAnimation = data => ({
 export const initialState = {
   mainAnimations: [],
   isAddedAnimation: false,
+
+  addPostLoading: false, // post 등록중인지
+  addPostDone: false,
+  addPostError: null,
 };
+
+/**
+ * Actions
+ */
+export const ADD_ANI_REQUEST = 'ADD_ANI_REQUEST';
+export const ADD_ANI_SUCCESS = 'ADD_ANI_SUCCESS';
+export const ADD_ANI_FAILURE = 'ADD_ANI_FAILURE';
+
+export const REMOVE_ANI_REQUEST = 'REMOVE_ANI_REQUEST';
+export const REMOVE_ANI_SUCCESS = 'REMOVE_ANI_SUCCESS';
+export const REMOVE_ANI_FAILURE = 'REMOVE_ANI_FAILURE';
 
 /**
  * Action 생성
  */
-export const ADD_ANI = 'ADD_ANI';
-export const addAni = data => {
-  return {
-    type: ADD_ANI,
-    data,
-  };
-};
+export const addAniRequest = data => ({
+  type: ADD_ANI_REQUEST,
+  data,
+});
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_ANI:
-      const dummy = generateDummyAni(1);
-      console.log(action.data);
-      return {
-        ...state,
-        mainAnimations: [dummy[0], ...state.mainAnimations],
-        isAddedAnimation: true,
-      };
-    default:
-      return state;
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case ADD_ANI_REQUEST:
+        draft.addPostLoading = true;
+        draft.addPostDone = false;
+        draft.addPostError = null;
+        break;
+      case ADD_ANI_SUCCESS:
+        // const dummy = generateDummyAni(1);
+        draft.mainAnimations.unshift(dummyAnimation(action.data));
+        draft.addPostDone = true;
+        draft.addPostLoading = false;
+        break;
+      case ADD_ANI_FAILURE:
+        draft.addPostLoading = false;
+        draft.addPostError = action.error;
+        break;
+      default:
+        break;
+    }
+  });
 };
 
 export default reducer;
