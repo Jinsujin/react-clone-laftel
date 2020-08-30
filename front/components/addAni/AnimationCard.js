@@ -3,6 +3,7 @@ import { Comment, List, Card, Popover, Button, Avatar, Row, Col } from 'antd';
 import { StarFilled, CaretRightOutlined } from '@ant-design/icons';
 import AniThumbnailImage from './AniThumbnailImage';
 import styled from 'styled-components';
+import RoundedBtn from '../common/RoundedBtn';
 
 const AnimationCardWrapper = styled.div`
   position: relative;
@@ -100,20 +101,6 @@ const StarpointBtn = styled.span`
   font-weight: 500;
   line-height: 1;
   pointer-events: none;
-`;
-
-const RoundedBtn = styled.button`
-  background: #816bff;
-  height: 43px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 9.5rem;
-  border-radius: 22px;
-  color: #fff;
-  font-size: 1.125rem;
-  font-weight: 500;
-  cursor: pointer;
 `;
 
 const AnimationCard = ({ animation }) => {

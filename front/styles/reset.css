@@ -151,3 +151,11 @@ button {
   padding: 0px;
   overflow: visible;
 }
+
+h2 {
+  margin-top: 0px;
+  margin-bottom: 1.5em;
+  color: rgb(40, 42, 53);
+  font-size: 2rem;
+  font-weight: bold;
+}
