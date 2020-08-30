@@ -5,8 +5,10 @@ import FinderCard from './FinderCard';
 
 const FilterResultListWrapper = styled.div`
   margin-top: 3rem;
-  margin-left: 260px;
   width: calc(100% - 260px);
+  position: absolute;
+  right: 0;
+  top: 0;
   /* overflow: hidden; */
 
   p {
@@ -26,6 +28,16 @@ const FilterResultListWrapper = styled.div`
 const CardWrap = styled.section`
   display: flex;
   flex-wrap: wrap;
+  padding-left: 2rem;
+  & > div {
+    margin: 1.25rem 0.4rem;
+  }
+  & > div:nth-child(4) {
+    margin-right: 0;
+  }
+  & > div:nth-child(4n + 1) {
+    margin-left: 0;
+  }
 `;
 
 const FilterResultList = ({ animationItems }) => {

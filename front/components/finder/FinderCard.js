@@ -4,8 +4,6 @@ import styled from 'styled-components';
 const ImageCardWrap = styled.div`
   cursor: pointer;
   position: relative;
-  margin: 1.25rem 2rem;
-  width: calc((100% - 16rem) / 4);
 
   & .thumbnail {
     position: relative;
