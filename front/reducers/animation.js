@@ -61,11 +61,21 @@ export const initialState = {
   addPostLoading: false, // post 등록중인지
   addPostDone: false,
   addPostError: null,
+
+  loadAniListLoading: false,
+  loadAniListDone: false,
+  loadAniListError: null,
+
+  hadMoreAniList: true,
 };
 
 /**
  * Actions
  */
+export const LOAD_ANI_LIST_REQUEST = 'LOAD_ANI_LIST_REQUEST';
+export const LOAD_ANI_LIST_SUCCESS = 'LOAD_ANI_LIST_SUCCESS';
+export const LOAD_ANI_LIST_FAILURE = 'LOAD_ANI_LIST_FAILURE';
+
 export const ADD_ANI_REQUEST = 'ADD_ANI_REQUEST';
 export const ADD_ANI_SUCCESS = 'ADD_ANI_SUCCESS';
 export const ADD_ANI_FAILURE = 'ADD_ANI_FAILURE';
@@ -85,6 +95,20 @@ export const addAniRequest = data => ({
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case LOAD_ANI_LIST_REQUEST:
+        draft.loadAniListLoading = true;
+        draft.loadAniListDone = false;
+        draft.loadAniListError = null;
+        break;
+      case LOAD_ANI_LIST_SUCCESS:
+        draft.loadAniListLoading = false;
+        draft.loadAniListDone = true;
+        draft.mainAnimations = action.data.concat(draft.mainAnimations);
+        break;
+      case LOAD_ANI_LIST_FAILURE:
+        draft.loadAniListLoading = false;
+        draft.loadAniListError = action.error;
+        break;
       case ADD_ANI_REQUEST:
         draft.addPostLoading = true;
         draft.addPostDone = false;
@@ -93,6 +117,7 @@ const reducer = (state = initialState, action) => {
       case ADD_ANI_SUCCESS:
         // const dummy = generateDummyAni(1);
         draft.mainAnimations.unshift(dummyAnimation(action.data));
+        draft.hadMoreAniList = draft.mainAnimations.length < 50;
         draft.addPostDone = true;
         draft.addPostLoading = false;
         break;

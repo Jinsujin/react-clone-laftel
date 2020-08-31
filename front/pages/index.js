@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppLayout from '../components/common/AppLayout';
 import NewAnimationList from '../components/NewAnimationList';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Carousel from '../components/home/Carousel';
-import { useDispatch } from 'react-redux';
+import { LOAD_ANI_LIST_REQUEST } from '../reducers/animation';
 
 const images = Array(5)
   .fill()
@@ -13,13 +13,18 @@ const images = Array(5)
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { mainAnimations } = useSelector(state => state.animation);
+  const { mainAnimations, loadAniListLoading, loadAniListDone } = useSelector(
+    state => state.animation,
+  );
 
   // TODO: GET caroucel images
-  // useEffect(() => {
-  //   dispatch({
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (!loadAniListDone) {
+      dispatch({
+        type: LOAD_ANI_LIST_REQUEST,
+      });
+    }
+  }, [loadAniListDone]);
 
   return (
     <>
