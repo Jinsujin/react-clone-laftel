@@ -55,73 +55,73 @@ const dummyAnimation = data => ({
 });
 
 export const initialState = {
-  mainAnimations: [],
-  isAddedAnimation: false,
+  mainPosts: [],
+  isAddedPost: false,
 
   addPostLoading: false, // post 등록중인지
   addPostDone: false,
   addPostError: null,
 
-  loadAniListLoading: false,
-  loadAniListDone: false,
-  loadAniListError: null,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
 
-  hadMoreAniList: true,
+  hadMorePosts: true,
 };
 
 /**
  * Actions
  */
-export const LOAD_ANI_LIST_REQUEST = 'LOAD_ANI_LIST_REQUEST';
-export const LOAD_ANI_LIST_SUCCESS = 'LOAD_ANI_LIST_SUCCESS';
-export const LOAD_ANI_LIST_FAILURE = 'LOAD_ANI_LIST_FAILURE';
+export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
-export const ADD_ANI_REQUEST = 'ADD_ANI_REQUEST';
-export const ADD_ANI_SUCCESS = 'ADD_ANI_SUCCESS';
-export const ADD_ANI_FAILURE = 'ADD_ANI_FAILURE';
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
-export const REMOVE_ANI_REQUEST = 'REMOVE_ANI_REQUEST';
-export const REMOVE_ANI_SUCCESS = 'REMOVE_ANI_SUCCESS';
-export const REMOVE_ANI_FAILURE = 'REMOVE_ANI_FAILURE';
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
 /**
  * Action 생성
  */
-export const addAniRequest = data => ({
-  type: ADD_ANI_REQUEST,
+export const addPostRequest = data => ({
+  type: ADD_POST_REQUEST,
   data,
 });
 
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
-      case LOAD_ANI_LIST_REQUEST:
-        draft.loadAniListLoading = true;
-        draft.loadAniListDone = false;
-        draft.loadAniListError = null;
+      case LOAD_POSTS_REQUEST:
+        draft.loadPostsLoading = true;
+        draft.loadPostsDone = false;
+        draft.loadPostsError = null;
         break;
-      case LOAD_ANI_LIST_SUCCESS:
-        draft.loadAniListLoading = false;
-        draft.loadAniListDone = true;
-        draft.mainAnimations = action.data.concat(draft.mainAnimations);
+      case LOAD_POSTS_SUCCESS:
+        draft.loadPostsLoading = false;
+        draft.loadPostsDone = true;
+        draft.mainPosts = action.data.concat(draft.mainPosts);
         break;
-      case LOAD_ANI_LIST_FAILURE:
-        draft.loadAniListLoading = false;
-        draft.loadAniListError = action.error;
+      case LOAD_POSTS_FAILURE:
+        draft.loadPostsLoading = false;
+        draft.loadPostsError = action.error;
         break;
-      case ADD_ANI_REQUEST:
+      case ADD_POST_REQUEST:
         draft.addPostLoading = true;
         draft.addPostDone = false;
         draft.addPostError = null;
         break;
-      case ADD_ANI_SUCCESS:
+      case ADD_POST_SUCCESS:
         // const dummy = generateDummyAni(1);
-        draft.mainAnimations.unshift(dummyAnimation(action.data));
-        draft.hadMoreAniList = draft.mainAnimations.length < 50;
+        draft.mainPosts.unshift(dummyAnimation(action.data));
+        draft.hadMorePosts = draft.mainPosts.length < 50;
         draft.addPostDone = true;
         draft.addPostLoading = false;
         break;
-      case ADD_ANI_FAILURE:
+      case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
         break;

@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Form, Button, Input } from 'antd';
-import { addAniRequest } from '../../reducers/animation';
+import { addPostRequest } from '../../reducers/post';
 import { useDispatch, useSelector } from 'react-redux';
 
-const AddAnimationForm = () => {
+const AddPostForm = () => {
   const dispatch = useDispatch();
   const { addPostLoading } = useSelector(state => state.animation);
   const [text, setText] = useState('');
@@ -18,7 +18,7 @@ const AddAnimationForm = () => {
   }, [imageInputEl.current]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addAniRequest(text));
+    dispatch(addPostRequest(text));
   }, [text]);
 
   return (
@@ -49,4 +49,4 @@ const AddAnimationForm = () => {
   );
 };
 
-export default AddAnimationForm;
+export default AddPostForm;

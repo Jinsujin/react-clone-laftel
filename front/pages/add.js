@@ -1,20 +1,20 @@
 import React from 'react';
 import AppLayout from '../components/common/AppLayout';
 import { useSelector } from 'react-redux';
-import AddAnimationForm from '../components/addAni/AddAnimationForm';
-import AnimationCard from '../components/addAni/AnimationCard';
+import AddPostForm from '../components/addPost/AddPostForm';
+import PostCard from '../components/addPost/PostCard';
 
-const AddAnimation = () => {
+const AddPost = () => {
   const { me } = useSelector(state => state.user);
-  const { mainAnimations } = useSelector(state => state.animation);
+  const { mainPosts } = useSelector(state => state.post);
 
   return (
     <AppLayout>
-      {me && <AddAnimationForm />}
-      {mainAnimations.map(ani => (
-        <AnimationCard key={ani.id} animation={ani} />
+      {me && <AddPostForm />}
+      {mainPosts.map(ani => (
+        <PostCard key={ani.id} post={ani} />
       ))}
     </AppLayout>
   );
 };
-export default AddAnimation;
+export default AddPost;

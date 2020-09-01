@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col, Card } from 'antd';
 import FinderCard from './FinderCard';
 
 const FilterResultListWrapper = styled.div`

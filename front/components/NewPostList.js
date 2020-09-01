@@ -9,7 +9,7 @@ const ListWrapper = styled(List)`
   font-size: 2em;
 `;
 
-const NewAnimationList = ({ header, data }) => {
+const NewPostList = ({ header, data }) => {
   return (
     <ListWrapper
       style={{ marginBottom: 20 }}
@@ -39,4 +39,4 @@ const NewAnimationList = ({ header, data }) => {
   );
 };
 
-export default NewAnimationList;
+export default NewPostList;

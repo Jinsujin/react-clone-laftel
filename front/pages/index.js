@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import AppLayout from '../components/common/AppLayout';
-import NewAnimationList from '../components/NewAnimationList';
+import NewPostList from '../components/NewPostList';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from '../components/home/Carousel';
-import { LOAD_ANI_LIST_REQUEST } from '../reducers/animation';
+import { LOAD_POSTS_REQUEST } from '../reducers/post';
 
 const images = Array(5)
   .fill()
@@ -13,29 +13,26 @@ const images = Array(5)
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { mainAnimations, loadAniListLoading, loadAniListDone } = useSelector(
-    state => state.animation,
+  const { mainPosts, loadPostsLoading, loadPostsDone } = useSelector(
+    state => state.post,
   );
 
   // TODO: GET caroucel images
   useEffect(() => {
-    if (!loadAniListDone) {
+    if (!loadPostsDone) {
       dispatch({
-        type: LOAD_ANI_LIST_REQUEST,
+        type: LOAD_POSTS_REQUEST,
       });
     }
-  }, [loadAniListDone]);
+  }, [loadPostsDone]);
 
   return (
     <>
       <AppLayout>
         <Carousel images={images} />
-        <NewAnimationList
-          header="2020년 3분기 기대신작 애니"
-          data={mainAnimations}
-        />
-        <NewAnimationList header="따끈따끈 신작 랭킹" data={mainAnimations} />
-        <NewAnimationList header="역대 인기 애니" data={mainAnimations} />
+        <NewPostList header="2020년 3분기 기대신작 애니" data={mainPosts} />
+        <NewPostList header="따끈따끈 신작 랭킹" data={mainPosts} />
+        <NewPostList header="역대 인기 애니" data={mainPosts} />
       </AppLayout>
     </>
   );

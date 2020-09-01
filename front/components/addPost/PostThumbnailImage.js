@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useCallback } from './react';
+import PropTypes from './prop-types';
 import ImagesZoom from '../ImagesZoom';
 
-const AniThumbnailImage = ({ image }) => {
+const PostThumbnailImage = ({ image }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
 
   const onZoom = useCallback(() => {
@@ -22,8 +22,8 @@ const AniThumbnailImage = ({ image }) => {
   );
 };
 
-AniThumbnailImage.propTypes = {
+PostThumbnailImage.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default AniThumbnailImage;
+export default PostThumbnailImage;

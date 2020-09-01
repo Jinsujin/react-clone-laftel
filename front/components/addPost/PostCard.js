@@ -1,7 +1,5 @@
 import React, { useCallback } from 'react';
-import { Comment, List, Card, Popover, Button, Avatar, Row, Col } from 'antd';
 import { StarFilled, CaretRightOutlined } from '@ant-design/icons';
-import AniThumbnailImage from './AniThumbnailImage';
 import styled from 'styled-components';
 import RoundedBtn from '../common/RoundedBtn';
 
@@ -103,19 +101,19 @@ const StarpointBtn = styled.span`
   pointer-events: none;
 `;
 
-const AnimationCard = ({ animation }) => {
+const PostCard = ({ post }) => {
   const onClick = useCallback(() => {}, []);
   return (
     <AnimationCardWrapper onClick={onClick}>
       <AniImageWrap>
-        <img src={animation.thumbnailImage} />
+        <img src={post.thumbnailImage} />
       </AniImageWrap>
       <AniInfosWrap>
-        <h3>{animation.title}</h3>
+        <h3>{post.title}</h3>
         <div className="tags">
           <StarpointBtn>
             {' '}
-            <StarFilled /> 평점 {animation.starpoint}
+            <StarFilled /> 평점 {post.starpoint}
           </StarpointBtn>
           <TagLink>스릴러</TagLink>
           <TagLink>스릴러</TagLink>
@@ -144,4 +142,4 @@ const AnimationCard = ({ animation }) => {
   );
 };
 
-export default AnimationCard;
+export default PostCard;
