@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import AppLayout from '../components/common/AppLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { END } from 'redux-saga';
+import Router from 'next/router';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 import RoundedBtn from '../components/common/RoundedBtn';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { SIGN_UP_REQUEST } from '../reducers/user';
-import { useDispatch, useSelector } from 'react-redux';
-import Router from 'next/router';
+import AppLayout from '../components/common/AppLayout';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -163,5 +165,22 @@ const Signup = () => {
     </AppLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async context => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+
+  if (context.req && cookie) {
+    // 쿠키가 공유되는 문제를 막기위함
+    axios.defaults.headers.Cookie = cookie;
+  }
+
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});
 
 export default Signup;

@@ -10,9 +10,9 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
  * GET /user
  */
 router.get('/', async (req, res, next) => {
+  console.log('쿠키 == ', req.headers);
   try {
     if (req.user) {
-      console.log('req user = ', req.user);
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.user.id },
         attributes: {
@@ -27,7 +27,6 @@ router.get('/', async (req, res, next) => {
       });
       res.status(200).json(fullUserWithoutPassword);
     } else {
-      console.log('req user 없음');
       res.status(200).json(null);
     }
   } catch (error) {
