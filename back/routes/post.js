@@ -4,6 +4,51 @@ const router = express.Router();
 const { isLoggedIn } = require('./middlewares');
 
 /**
+ * 게시글 정보 가져오기
+ * GET /post
+ */
+router.get('/:postId', async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    if (!post) {
+      return res.status(404).send('존재하지 않는 게시글 입니다.');
+    }
+    const fullPost = await Post.findOne({
+      where: { id: post.id },
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id', 'nickname'],
+        },
+        {
+          mode: User,
+          attributes: ['id', 'nickname'],
+        },
+        {
+          model: Review,
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json(fullPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+/**
  * 게시글 생성
  * POST /post
  */

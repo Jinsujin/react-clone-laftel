@@ -56,15 +56,20 @@ const dummyAnimation = data => ({
 
 export const initialState = {
   mainPosts: [],
+  singlePost: null,
   isAddedPost: false,
 
   addPostLoading: false, // post 등록중인지
   addPostDone: false,
   addPostError: null,
 
-  loadPostsLoading: false,
+  loadPostsLoading: false, // post array 불러오기
   loadPostsDone: false,
   loadPostsError: null,
+
+  loadPostLoading: false, // post 상세 불러오기
+  loadPostDone: false,
+  loadPostError: null,
 
   addReviewLoading: false, // comment 등록중인지
   addReviewDone: false,
@@ -79,6 +84,10 @@ export const initialState = {
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -103,6 +112,21 @@ export const addPostRequest = data => ({
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case LOAD_POST_REQUEST:
+        draft.loadPostLoading = true;
+        draft.loadPostDone = false;
+        draft.loadPostError = null;
+        break;
+      case LOAD_POST_SUCCESS:
+        draft.loadPostLoading = false;
+        draft.loadPostDone = true;
+        draft.singlePost = action.data;
+        break;
+      case LOAD_POST_FAILURE:
+        draft.loadPostLoading = false;
+        draft.loadPostError = action.error;
+        break;
+
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;

@@ -12,6 +12,7 @@ import {
   ADD_REVIEW_SUCCESS,
   ADD_REVIEW_FAILURE,
   ADD_REVIEW_REQUEST,
+  LOAD_POST_REQUEST,
 } from '../reducers/post';
 import { ADD_POST_TO_ME } from '../reducers/user';
 
@@ -96,11 +97,37 @@ function* watchLoadMainPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadMainPosts);
 }
 /************** //End loadMainPost ****************/
+/************** loadPost ****************/
+function loadPostAPI(data) {
+  return axios.get(`/post${data}`);
+}
+
+function* loadPost(action) {
+  try {
+    const result = yield call(loadPostAPI, action.data);
+
+    yield put({
+      type: LOAD_POSTS_SUCCESS,
+      data: result.data, // 성공 결과
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_POSTS_FAILURE,
+      error: e.response.data, // 실패 결과
+    });
+  }
+}
+
+function* watchLoadPost() {
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
+}
+/************** //End loadPost ****************/
 
 export default function* postSaga() {
   yield all([
     fork(watchAddReview),
     fork(watchAddPost),
     fork(watchLoadMainPosts),
+    fork(watchLoadPost),
   ]);
 }
