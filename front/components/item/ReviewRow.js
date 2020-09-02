@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StarFilled, LikeOutlined } from '@ant-design/icons';
+import { LikeOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import StarPoint from './StarPoint';
 
 const ReviewWrap = styled.div`
   padding-top: 1rem;
@@ -40,11 +41,7 @@ const ReviewRow = () => {
     <ReviewWrap>
       <div className="review-head">
         <div className="username">youb***</div>
-        <div className="stars">
-          <StarFilled style={{ color: '#FFDA01' }} />
-          <StarFilled style={{ color: '#FFDA01' }} />
-          <StarFilled style={{ color: '#FFDA01' }} />
-        </div>
+        <StarPoint point={5} />
       </div>
       <p>
         어릴때 정말 많이 봤어요ㅠㅋㅋㅋㅋ전 맛쿠로쿠로스케를 제일 좋아했슴다

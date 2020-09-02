@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import AppLayout from '../components/common/AppLayout';
+import React, { useState, useCallback } from 'react';
 import Head from 'next/head';
-
+import { Button } from 'antd';
+import { HeartOutlined, Heart } from '@ant-design/icons';
 import styled from 'styled-components';
 import TagsBox from '../components/item/TagsBox';
 import SummaryBox from '../components/item/SummaryBox';
 import ReviewList from '../components/item/ReviewList';
 import Header from '../components/common/Header';
 import Responsive from '../components/common/Responsive';
+import Episode from '../components/item/Episode';
+import cn from 'classnames';
 
 const ResponsiveWrap = styled(Responsive)`
   display: flex;
 `;
 
 const ItemHead = styled.div`
+  position: relative;
   background-color: #272b35;
   height: 500px;
   background: #282a35;
@@ -65,12 +68,8 @@ const AniImageWrap = styled.div`
   }
 `;
 
-const DetailInfoWrap = styled.div`
+const BottomContentWrap = styled.div`
   display: flex;
-
-  & > div {
-  }
-
   .main {
     background-color: #fff;
     border: 1px solid #ecedef;
@@ -88,12 +87,33 @@ const DetailInfoWrap = styled.div`
   }
 `;
 
-{
-  /* <Header />
-<ResponsiveWrapper>{children}</ResponsiveWrapper> */
-}
+const TabMenuList = styled.ul`
+  display: flex;
+  margin-bottom: 1.4rem;
+
+  & > li {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: #495057;
+    padding-bottom: 0.125rem;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+  }
+  & > li.active {
+    color: #816bff;
+    border-bottom: 3px solid #816bff;
+    font-weight: 600;
+  }
+`;
 
 const Item = () => {
+  const [activeTabNum, setActiveTabNum] = useState(0);
+
+  const onClickMenu = useCallback(index => {
+    console.log(index);
+    setActiveTabNum(index);
+  }, []);
+
   return (
     <>
       <Head>
@@ -114,13 +134,31 @@ const Item = () => {
             <div className="star-average">평균 4.1</div>
             <div>별점 주기</div>
           </HeadDetail>
+          <Button
+            style={{
+              color: '#816bff',
+              position: 'absolute',
+              right: '0',
+              top: '0',
+            }}
+            icon={<HeartOutlined />}
+          >
+            좋아요
+          </Button>
         </ResponsiveWrap>
       </ItemHead>
-
       <Responsive>
-        <DetailInfoWrap>
+        <BottomContentWrap>
           <div className="main">
-            <ReviewList />
+            <TabMenuList>
+              <li className={cn({ active: activeTabNum === 0 })}>
+                <a onClick={() => onClickMenu(0)}>리뷰</a>
+              </li>
+              <li className={cn({ active: activeTabNum === 1 })}>
+                <a onClick={() => onClickMenu(1)}>에피소드</a>
+              </li>
+            </TabMenuList>
+            {activeTabNum === 0 ? <ReviewList /> : <Episode />}
           </div>
           <div className="side">
             <TagsBox />
@@ -130,7 +168,7 @@ const Item = () => {
               }
             />
           </div>
-        </DetailInfoWrap>
+        </BottomContentWrap>
       </Responsive>
     </>
   );
