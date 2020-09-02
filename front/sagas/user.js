@@ -7,10 +7,40 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
 } from '../reducers/user';
 
-/***************  LogIn  ***************/
+/************** SignUp ****************/
+// data: {email, password, nickname}
+function signUpAPI(data) {
+  return axios.post('/user', data);
+}
 
+function* signUp(action) {
+  try {
+    console.log('signup saga');
+
+    const result = yield call(signUpAPI, action.data);
+    console.log(result);
+
+    yield put({
+      type: SIGN_UP_SUCCESS,
+    });
+  } catch (e) {
+    yield put({
+      type: SIGN_UP_FAILURE,
+      error: e.response.data, // 실패 결과
+    });
+  }
+}
+
+function* watchSignUp() {
+  yield takeLatest(SIGN_UP_REQUEST, signUp);
+}
+/*************** // End signUp  ***************/
+/***************  LogIn  ***************/
 /**
  * STEP03.
  * 서버에 요청
@@ -81,5 +111,5 @@ function* watchLogOut() {
 /*************** // End LogOut  ***************/
 
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut)]);
+  yield all([fork(watchSignUp), fork(watchLogIn), fork(watchLogOut)]);
 }

@@ -13,6 +13,10 @@ export const initialState = {
   logOutLoading: false, // 로그아웃 시도중 - true 일때 로딩
   logOutDone: false,
   logOutError: null,
+
+  signUpLoading: false, // 회원가입 시도중
+  signUpDone: false,
+  signUpError: null,
 };
 
 /**
@@ -25,6 +29,10 @@ export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
 // post 상태 에서 변화가 일어났을때 user 상태 변화
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
@@ -87,6 +95,21 @@ const reducer = (state = initialState, action) => {
       case LOG_OUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
+        break;
+
+      case SIGN_UP_REQUEST:
+        draft.signUpLoading = true;
+        draft.signUpDone = false;
+        draft.signUpError = null;
+        break;
+      case SIGN_UP_SUCCESS:
+        draft.signUpLoading = false;
+        draft.signUpDone = true;
+        // draft.me = action.data;
+        break;
+      case SIGN_UP_FAILURE:
+        draft.signUpLoading = false;
+        draft.signUpError = action.error;
         break;
       default:
         break;

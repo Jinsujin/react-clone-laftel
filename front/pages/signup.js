@@ -1,9 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import AppLayout from '../components/common/AppLayout';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 import RoundedBtn from '../components/common/RoundedBtn';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { SIGN_UP_REQUEST } from '../reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -37,6 +40,23 @@ const FormStyle = styled(Form)`
 `;
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const { signUpLoading, signUpDone, signUpError } = useSelector(
+    state => state.user,
+  );
+  // 회원가입 완료시 메인페이지로
+  useEffect(() => {
+    if (signUpDone) {
+      Router.push('/');
+    }
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -71,11 +91,16 @@ const Signup = () => {
   }, []);
 
   const onSubmit = useCallback(() => {
-    console.log('submit = ', email);
     if (!term) {
       return setTermError(true);
     }
-  });
+
+    console.log(email, nickname, password);
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: { email, password, nickname },
+    });
+  }, [email, password, term]);
 
   return (
     <AppLayout>
