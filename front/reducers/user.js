@@ -17,6 +17,10 @@ export const initialState = {
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
+
+  loadMyinfoLoading: false, // 유저정보 가져오기 시도중
+  loadMyinfoDone: false,
+  loadMyinfoError: null,
 };
 
 /**
@@ -37,6 +41,11 @@ export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 // post 상태 에서 변화가 일어났을때 user 상태 변화
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 
+// 페이지 새로고침시, 사용자 정보 불러오기
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
+
 /**
  * Action 생성 함수
  */
@@ -56,6 +65,21 @@ export const logoutRequestAction = () => {
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case LOAD_MY_INFO_REQUEST:
+        draft.loadMyinfoLoading = true;
+        draft.loadMyinfoDone = false;
+        draft.loadMyinfoError = null;
+        break;
+      case LOAD_MY_INFO_SUCCESS:
+        draft.loadMyinfoLoading = false;
+        draft.loadMyinfoDone = true;
+        draft.me = action.data;
+        break;
+      case LOAD_MY_INFO_FAILURE:
+        draft.loadMyinfoLoading = false;
+        draft.loadMyinfoError = action.error;
+        break;
+
       case ADD_POST_TO_ME:
         draft.me.Posts.unshift({ id: action.data });
         break;
@@ -96,7 +120,6 @@ const reducer = (state = initialState, action) => {
       case SIGN_UP_SUCCESS:
         draft.signUpLoading = false;
         draft.signUpDone = true;
-        // draft.me = action.data;
         break;
       case SIGN_UP_FAILURE:
         draft.signUpLoading = false;

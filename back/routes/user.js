@@ -6,6 +6,37 @@ const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 /**
+ * 새로고침시, 로그인 정보 가져오기
+ * GET /user
+ */
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      console.log('req user = ', req.user);
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ['password'],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.status(200).json(fullUserWithoutPassword);
+    } else {
+      console.log('req user 없음');
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+/**
  * 로그인
  * POST /user/login
  * err: 서버에러

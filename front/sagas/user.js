@@ -10,8 +10,36 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
+  LOAD_MY_INFO_SUCCESS,
+  LOAD_MY_INFO_FAILURE,
+  LOAD_MY_INFO_REQUEST,
 } from '../reducers/user';
 
+/************** loadUser ****************/
+function loadMyinfoAPI() {
+  return axios.get('/user');
+}
+
+function* loadMyinfo() {
+  try {
+    const result = yield call(loadMyinfoAPI);
+
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      error: e.response.data, // 실패 결과
+    });
+  }
+}
+
+function* watchLoadMyinfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyinfo);
+}
+/*************** // End loadUser  ***************/
 /************** SignUp ****************/
 // data: {email, password, nickname}
 function signUpAPI(data) {
@@ -107,5 +135,10 @@ function* watchLogOut() {
 /*************** // End LogOut  ***************/
 
 export default function* userSaga() {
-  yield all([fork(watchSignUp), fork(watchLogIn), fork(watchLogOut)]);
+  yield all([
+    fork(watchLoadMyinfo),
+    fork(watchSignUp),
+    fork(watchLogIn),
+    fork(watchLogOut),
+  ]);
 }

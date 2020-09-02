@@ -3,9 +3,10 @@ import AppLayout from '../components/common/AppLayout';
 import NewPostList from '../components/NewPostList';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from '../components/home/Carousel';
-import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import Header from '../components/common/Header';
 import Responsive from '../components/common/Responsive';
+import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 
 const images = Array(5)
   .fill()
@@ -21,12 +22,14 @@ const Home = () => {
 
   // TODO: GET caroucel images
   useEffect(() => {
-    if (!loadPostsDone) {
-      dispatch({
-        type: LOAD_POSTS_REQUEST,
-      });
-    }
-  }, [loadPostsDone]);
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
+  }, []);
 
   return (
     <>

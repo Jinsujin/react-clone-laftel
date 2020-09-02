@@ -7,11 +7,10 @@ const passportConfig = require('./passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const app = express();
 const dotenv = require('dotenv');
 
-passportConfig();
 dotenv.config();
+const app = express();
 
 db.sequelize
   .sync()
@@ -19,6 +18,7 @@ db.sequelize
     console.log('-------db connect success------');
   })
   .catch(console.error);
+passportConfig();
 
 app.use(
   cors({
