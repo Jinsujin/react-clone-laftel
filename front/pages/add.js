@@ -3,6 +3,7 @@ import AppLayout from '../components/common/AppLayout';
 import { useSelector } from 'react-redux';
 import AddPostForm from '../components/addPost/AddPostForm';
 import PostCard from '../components/addPost/PostCard';
+import styled from 'styled-components';
 
 const AddPost = () => {
   const { me } = useSelector(state => state.user);

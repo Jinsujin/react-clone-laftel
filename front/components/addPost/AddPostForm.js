@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const AddPostForm = () => {
   const dispatch = useDispatch();
-  const { addPostLoading } = useSelector(state => state.animation);
+  const { addPostLoading } = useSelector(state => state.post);
   const [text, setText] = useState('');
   const onChangeText = useCallback(e => {
     setText(e.target.value);

@@ -1,0 +1,139 @@
+import React, { useState } from 'react';
+import AppLayout from '../components/common/AppLayout';
+import Head from 'next/head';
+
+import styled from 'styled-components';
+import TagsBox from '../components/item/TagsBox';
+import SummaryBox from '../components/item/SummaryBox';
+import ReviewList from '../components/item/ReviewList';
+import Header from '../components/common/Header';
+import Responsive from '../components/common/Responsive';
+
+const ResponsiveWrap = styled(Responsive)`
+  display: flex;
+`;
+
+const ItemHead = styled.div`
+  background-color: #272b35;
+  height: 500px;
+  background: #282a35;
+  padding-top: 104px;
+  color: #fff;
+  margin-bottom: 5rem;
+`;
+
+const HeadDetail = styled.div`
+  margin-left: 1rem;
+  & h1 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    height: 5.5rem;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .genre {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .star-average {
+    font-size: 1.2rem;
+    margin-bottom: 1.8rem;
+  }
+`;
+
+const AniImageWrap = styled.div`
+  background-color: orange;
+  position: relative;
+  width: 268px;
+  height: 361px;
+  overflow: hidden;
+
+  & img {
+    border-radius: 4px;
+    display: block;
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #e9ecef;
+    border: none;
+  }
+`;
+
+const DetailInfoWrap = styled.div`
+  display: flex;
+
+  & > div {
+  }
+
+  .main {
+    background-color: #fff;
+    border: 1px solid #ecedef;
+    padding: 1.5rem;
+    border-radius: 4px;
+    flex: 1 1;
+  }
+  .side {
+    width: 20rem;
+    margin-left: 1.5rem;
+
+    & > article {
+      margin-bottom: 0.7rem;
+    }
+  }
+`;
+
+{
+  /* <Header />
+<ResponsiveWrapper>{children}</ResponsiveWrapper> */
+}
+
+const Item = () => {
+  return (
+    <>
+      <Head>
+        <title>상세 | CloneLaftel</title>
+      </Head>
+      <Header />
+      <ItemHead>
+        <ResponsiveWrap>
+          <AniImageWrap>
+            <img src="https://image.laftel.net/items/thumbs/large/45516aab-4eb0-4394-9a9d-36a36daf5283.jpg" />
+          </AniImageWrap>
+          <HeadDetail>
+            <div>
+              <span>극장판 | 전체 이용가</span>
+            </div>
+            <h1>이웃집 토토로</h1>
+            <div className="genre">판타지 / 치유</div>
+            <div className="star-average">평균 4.1</div>
+            <div>별점 주기</div>
+          </HeadDetail>
+        </ResponsiveWrap>
+      </ItemHead>
+
+      <Responsive>
+        <DetailInfoWrap>
+          <div className="main">
+            <ReviewList />
+          </div>
+          <div className="side">
+            <TagsBox />
+            <SummaryBox
+              summary={
+                '2020년 8월 1일 공개 예정입니다.] 1955년 일본의 아름다운 시골 마을. 상냥하고 의젓한 11살 사츠키와 장난꾸러기에 호기심...'
+              }
+            />
+          </div>
+        </DetailInfoWrap>
+      </Responsive>
+    </>
+  );
+};
+
+export default Item;

@@ -4,6 +4,8 @@ import NewPostList from '../components/NewPostList';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from '../components/home/Carousel';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import Header from '../components/common/Header';
+import Responsive from '../components/common/Responsive';
 
 const images = Array(5)
   .fill()
@@ -28,12 +30,13 @@ const Home = () => {
 
   return (
     <>
-      <AppLayout>
-        <Carousel images={images} />
+      <Header />
+      <Carousel images={images} />
+      <Responsive>
         <NewPostList header="2020년 3분기 기대신작 애니" data={mainPosts} />
         <NewPostList header="따끈따끈 신작 랭킹" data={mainPosts} />
         <NewPostList header="역대 인기 애니" data={mainPosts} />
-      </AppLayout>
+      </Responsive>
     </>
   );
 };

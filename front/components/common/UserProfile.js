@@ -7,8 +7,6 @@ import Router from 'next/router';
 import { logoutRequestAction } from '../../reducers/user';
 
 const UserProfileWrapper = styled.div`
-  /* display: flex;
-  align-items: center; */
   span {
     font-size: 1.2em;
   }

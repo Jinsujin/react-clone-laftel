@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { StarFilled, CaretRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import RoundedBtn from '../common/RoundedBtn';
+import Router from 'next/router';
 
 const AnimationCardWrapper = styled.div`
   position: relative;
@@ -13,7 +14,7 @@ const AnimationCardWrapper = styled.div`
   display: flex;
   padding: 1.5rem;
   cursor: pointer;
-  & + & {
+  & {
     margin-bottom: 1rem;
   }
 `;
@@ -54,7 +55,6 @@ const AniInfosWrap = styled.div`
   }
 
   & > p {
-    font-weight: 
     font-size: 1.4rem;
     line-height: 1.5;
     white-space: pre-wrap;
@@ -81,7 +81,6 @@ const TagLink = styled.a`
   font-size: 0.875rem;
   color: #816bff;
   font-weight: 500;
-  /* line-height: 1; */
 `;
 
 const StarpointBtn = styled.span`
@@ -102,7 +101,12 @@ const StarpointBtn = styled.span`
 `;
 
 const PostCard = ({ post }) => {
-  const onClick = useCallback(() => {}, []);
+  const onClick = useCallback(() => {
+    console.log('onclick');
+
+    // 상세 페이지 이동
+    Router.push('/item');
+  }, []);
   return (
     <AnimationCardWrapper onClick={onClick}>
       <AniImageWrap>
@@ -119,7 +123,7 @@ const PostCard = ({ post }) => {
           <TagLink>스릴러</TagLink>
           <TagLink>스릴러</TagLink>
         </div>
-        <p>{animation.content}</p>
+        <p>{post.content}</p>
         <RoundedBtn>
           <CaretRightOutlined />
           지금 재생
