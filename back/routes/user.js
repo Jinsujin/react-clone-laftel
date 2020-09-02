@@ -1,8 +1,55 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
-
+const { User, Post } = require('../models');
+const passport = require('passport');
 const router = express.Router();
+
+/**
+ * 로그인
+ * POST /user/login
+ * err: 서버에러
+ * user: 로그인 성공 객체
+ * info: 클라이언트 에러
+ */
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (info) {
+      // 클라이언트 에러
+      return res.status(401).send(info.reason);
+    }
+    // passport login
+    return req.login(user, async loginErr => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+
+      const userWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ['password'],
+        },
+        include: [{ model: Post }],
+      });
+
+      return res.status(200).json(userWithoutPassword);
+    });
+  })(req, res, next);
+});
+
+/**
+ * 로그아웃
+ * 세션과 쿠키를 삭제
+ */
+router.post('/logout', (req, res, next) => {
+  req.logout();
+  req.session.destroy();
+  res.status(200).send('ok');
+});
 
 /**
  * 회원가입

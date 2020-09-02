@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Form, Button, Input, Row, Col } from 'antd';
 import Link from 'next/link';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -15,9 +15,15 @@ const GlobalStyled = createGlobalStyle`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { logInLoading } = useSelector(state => state.user);
+  const { logInLoading, logInError } = useSelector(state => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
+    }
+  }, [logInError]);
 
   const onChangeEmail = useCallback(e => {
     setEmail(e.target.value);

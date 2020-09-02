@@ -46,8 +46,8 @@ function* watchSignUp() {
  * 서버에 요청
  * 주의- 제너레이터가 아님!
  */
-function logInAPI() {
-  return axios.post('/login');
+function logInAPI(data) {
+  return axios.post('/user/login', data);
 }
 
 /**
@@ -57,19 +57,16 @@ function logInAPI() {
 function* logIn(action) {
   try {
     // logInAPI을 통해 서버에서 요청받은 결과값을 받아올때까지 기다림(call)
-    // const result = yield call(logInAPI);
-    yield delay(1000);
+    const result = yield call(logInAPI, action.data);
 
     yield put({
       type: LOG_IN_SUCCESS,
-      // data: result.data, // 성공 결과
-      data: action.data,
+      data: result.data,
     });
   } catch (e) {
     yield put({
       type: LOG_IN_FAILURE,
-      // data: e.response.data, // 실패 결과
-      data: action.data,
+      error: e.response.data, // 실패 결과
     });
   }
 }
@@ -87,20 +84,19 @@ function* watchLogIn() {
 /***************  LogOut  ***************/
 
 function logOutAPI() {
-  return axios.post('/logout');
+  return axios.post('/user/logout');
 }
 
 function* logOut() {
   try {
-    // const result = yield call(logOutAPI);
-    yield delay(1000);
-
+    yield call(logOutAPI);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
   } catch (e) {
     yield put({
       type: LOG_OUT_FAILURE,
+      error: e.response.data, // 실패 결과
     });
   }
 }

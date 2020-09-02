@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   // model: Post => mysql: posts table
   const Post = sequelize.define(
-    'User',
+    'Post',
     {
       content: {
         type: DataTypes.TEXT,
