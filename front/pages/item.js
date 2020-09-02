@@ -110,7 +110,6 @@ const Item = () => {
   const [activeTabNum, setActiveTabNum] = useState(0);
 
   const onClickMenu = useCallback(index => {
-    console.log(index);
     setActiveTabNum(index);
   }, []);
 

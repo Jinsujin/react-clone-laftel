@@ -8,16 +8,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false, // 필수값
       },
       starpoint: {
-        type: DataTypes.INT,
+        type: DataTypes.INTEGER,
         allowNull: false, // 필수값
       },
     },
     {
       charset: 'utf8mb4',
-      collate: 'urf8mb4_general_ci',
+      collate: 'utf8mb4_general_ci',
     },
   );
-  Review.associate = db => {};
+  Review.associate = db => {
+    db.Review.belongsTo(db.User);
+    db.Review.belongsTo(db.Post);
+  };
 
   return Review;
 };

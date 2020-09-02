@@ -19,10 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       charset: 'utf8',
-      collate: 'urf8_general_ci',
+      collate: 'utf8_general_ci',
     },
   );
-  User.associate = db => {};
+  User.associate = db => {
+    db.User.hasMany(db.Post);
+    db.User.hasMany(db.Review);
+    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+  };
 
   return User;
 };

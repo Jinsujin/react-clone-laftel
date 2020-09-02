@@ -10,10 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       charset: 'utf8mb4',
-      collate: 'urf8mb4_general_ci',
+      collate: 'utf8mb4_general_ci',
     },
   );
-  Post.associate = db => {};
+  Post.associate = db => {
+    db.Post.belongsTo(db.User); // post 작성자
+    db.Post.hasMany(db.Review);
+    db.Post.hasMany(db.Image);
+    db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
+    // post 좋아요 누른 사람들
+    db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+  };
 
   return Post;
 };
