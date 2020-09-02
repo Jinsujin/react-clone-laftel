@@ -66,6 +66,10 @@ export const initialState = {
   loadPostsDone: false,
   loadPostsError: null,
 
+  addReviewLoading: false, // comment 등록중인지
+  addReviewDone: false,
+  addReviewError: null,
+
   hadMorePosts: true,
 };
 
@@ -83,6 +87,10 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
+export const ADD_REVIEW_REQUEST = 'ADD_REVIEW_REQUEST';
+export const ADD_REVIEW_SUCCESS = 'ADD_REVIEW_SUCCESS';
+export const ADD_REVIEW_FAILURE = 'ADD_REVIEW_FAILURE';
 
 /**
  * Action 생성
@@ -104,6 +112,7 @@ const reducer = (state = initialState, action) => {
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.mainPosts = action.data.concat(draft.mainPosts);
+        draft.hadMorePosts = draft.mainPosts.length < 50;
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
@@ -115,15 +124,29 @@ const reducer = (state = initialState, action) => {
         draft.addPostError = null;
         break;
       case ADD_POST_SUCCESS:
-        // const dummy = generateDummyAni(1);
-        draft.mainPosts.unshift(dummyAnimation(action.data));
-        draft.hadMorePosts = draft.mainPosts.length < 50;
+        draft.mainPosts.unshift(action.data);
         draft.addPostDone = true;
         draft.addPostLoading = false;
         break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
+        break;
+
+      case ADD_REVIEW_REQUEST:
+        draft.addReviewLoading = true;
+        draft.addReviewDone = false;
+        draft.addReviewError = null;
+        break;
+      case ADD_REVIEW_SUCCESS:
+        const post = draft.mainPosts.find(v => v.id === action.data.PostId);
+        post.Reviews.unshift(action.data);
+        draft.addReviewDone = true;
+        draft.addReviewLoading = false;
+        break;
+      case ADD_REVIEW_FAILURE:
+        draft.addReviewLoading = false;
+        draft.addReviewError = action.error;
         break;
       default:
         break;
