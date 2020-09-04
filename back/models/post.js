@@ -3,7 +3,15 @@ module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     'Post',
     {
+      title: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
       content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      summary: {
         type: DataTypes.TEXT,
         allowNull: false,
       },

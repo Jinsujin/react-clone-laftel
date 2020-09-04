@@ -61,8 +61,8 @@ const WritePostForm = () => {
   }, [imageInputEl.current]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPostRequest(title));
-  }, [title]);
+    dispatch(addPostRequest({ title, content, summary }));
+  }, [title, content, summary]);
 
   return (
     <Form
@@ -79,13 +79,13 @@ const WritePostForm = () => {
       <Input.TextArea
         value={content}
         onChange={onChangeContent}
-        maxLength={140}
+        maxLength={800}
         placeholder="내용을 입력해주세요"
       />
       <Input.TextArea
         value={summary}
         onChange={onChangeSummary}
-        maxLength={140}
+        maxLength={800}
         placeholder="줄거리를 입력해주세요"
       />
       <TagFormBox />

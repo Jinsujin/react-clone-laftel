@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { isLoggedIn } = require('./middlewares');
 
+const { Post, User, Image, Review } = require('../models');
+
 /**
  * 게시글 정보 가져오기
  * GET /post
@@ -55,17 +57,24 @@ router.get('/:postId', async (req, res, next) => {
 router.post('/', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.create({
+      title: req.body.title,
+      summary: req.body.summary,
       content: req.body.content,
       UserId: req.user.id,
     });
     const fullPost = await Post.findOne({
       where: { id: post.id },
       include: [
+        { model: User, attributes: ['id', 'nickname'] },
         {
-          model: Image,
+          model: Review,
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+          ],
         },
-        { model: User },
-        { model: Review },
       ],
     });
     res.status(201).json(fullPost);

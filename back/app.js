@@ -8,6 +8,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ db.sequelize
   .catch(console.error);
 passportConfig();
 
+app.use(morgan('dev'));
 app.use(
   cors({
     origin: true,
