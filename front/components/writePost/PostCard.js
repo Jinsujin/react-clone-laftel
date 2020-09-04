@@ -3,6 +3,9 @@ import { StarFilled, CaretRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import RoundedBtn from '../common/RoundedBtn';
 import Router from 'next/router';
+import { Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { REMOVE_POST_REQUEST } from '../../reducers/post';
 
 const AnimationCardWrapper = styled.div`
   position: relative;
@@ -13,7 +16,6 @@ const AnimationCardWrapper = styled.div`
   height: 364px;
   display: flex;
   padding: 1.5rem;
-  cursor: pointer;
   & {
     margin-bottom: 1rem;
   }
@@ -95,19 +97,41 @@ const StarpointBtn = styled.span`
   pointer-events: none;
 `;
 
-const PostCard = ({ post }) => {
-  const onClick = useCallback(() => {
-    console.log('onclick');
+const DeleteButton = styled(Button)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+`;
 
+const PostCard = ({ post }) => {
+  const dispatch = useDispatch();
+  const { removePostLoading } = useSelector(state => state.post);
+
+  const onClickDelete = useCallback(() => {
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: post.id,
+    });
+  }, []);
+
+  const onClick = useCallback(() => {
     // 상세 페이지 이동
-    Router.push('/item');
+    Router.push(`/post/${post.id}`);
   }, []);
   return (
-    <AnimationCardWrapper onClick={onClick}>
+    <AnimationCardWrapper>
       <AniImageWrap>
         <img src={post.thumbnailImage} />
       </AniImageWrap>
       <AniInfosWrap>
+        <DeleteButton
+          danger
+          onClick={onClickDelete}
+          loading={removePostLoading}
+        >
+          삭제
+        </DeleteButton>
         <h3>{post.title}</h3>
         <div className="tags">
           <StarpointBtn>
@@ -119,25 +143,12 @@ const PostCard = ({ post }) => {
           <TagLink>스릴러</TagLink>
         </div>
         <p>{post.content}</p>
-        <RoundedBtn>
+        <RoundedBtn onClick={onClick}>
           <CaretRightOutlined />
           지금 재생
         </RoundedBtn>
       </AniInfosWrap>
     </AnimationCardWrapper>
-
-    // <div>
-    //   <Card
-    //     cover={<AniThumbnailImage image={animation.thumbnailImage} />}
-    //     actions={[<RetweetOutlined key="retweet" />]}
-    //   >
-    //     <Card.Meta
-    //       avatar={<Avatar>{animation.User.nickname[0]}</Avatar>}
-    //       title={animation.title}
-    //       description={animation.content}
-    //     />
-    //   </Card>
-    // </div>
   );
 };
 

@@ -59,6 +59,10 @@ export const initialState = {
   singlePost: null,
   isAddedPost: false,
 
+  removePostLoading: false, // post 삭제
+  removePostDone: false,
+  removePostError: null,
+
   addPostLoading: false, // post 등록중인지
   addPostDone: false,
   addPostError: null,
@@ -112,6 +116,23 @@ export const addPostRequest = data => ({
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case REMOVE_POST_REQUEST:
+        draft.removePostLoading = true;
+        draft.removePostDone = false;
+        draft.removePostError = null;
+        break;
+      case REMOVE_POST_SUCCESS:
+        draft.removePostLoading = false;
+        draft.removePostDone = true;
+        draft.mainPosts = draft.mainPosts.filter(
+          v => v.id !== action.data.PostId,
+        );
+        break;
+      case REMOVE_POST_FAILURE:
+        draft.removePostLoading = false;
+        draft.removePostError = action.error;
+        break;
+
       case LOAD_POST_REQUEST:
         draft.loadPostLoading = true;
         draft.loadPostDone = false;

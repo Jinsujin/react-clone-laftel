@@ -110,4 +110,23 @@ router.post('/:postId/review', isLoggedIn, async (req, res, next) => {
   }
 });
 
+/**
+ * 게시글 삭제
+ * DELETE /post/1
+ * TODO: 관리자 체크
+ */
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
+  try {
+    await Post.destroy({
+      where: {
+        id: req.params.postId,
+      },
+    });
+    res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;

@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { useRouter } from '../../components/writePost/next/router';
+import { useRouter } from 'next/router';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import wrapper from '../../store/configureStore';
@@ -13,6 +13,7 @@ import { LOAD_POST_REQUEST } from '../../reducers/post';
 import Head from 'next/head';
 import { Button } from 'antd';
 import { HeartOutlined, Heart } from '@ant-design/icons';
+import cn from 'classnames';
 import styled from 'styled-components';
 import TagsBox from '../../components/item/TagsBox';
 import SummaryBox from '../../components/item/SummaryBox';
@@ -20,7 +21,6 @@ import ReviewList from '../../components/item/ReviewList';
 import Header from '../../components/common/Header';
 import Responsive from '../../components/common/Responsive';
 import Episode from '../../components/item/Episode';
-import cn from 'classnames';
 
 const ResponsiveWrap = styled(Responsive)`
   display: flex;

@@ -1,6 +1,5 @@
 import { all, delay, fork, put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import shortId from 'shortid';
 import {
   ADD_POST_REQUEST,
   ADD_POST_FAILURE,
@@ -8,11 +7,13 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_FAILURE,
   LOAD_POSTS_SUCCESS,
-  generateDummyAni,
   ADD_REVIEW_SUCCESS,
   ADD_REVIEW_FAILURE,
   ADD_REVIEW_REQUEST,
   LOAD_POST_REQUEST,
+  REMOVE_POST_REQUEST,
+  REMOVE_POST_SUCCESS,
+  REMOVE_POST_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME } from '../reducers/user';
 
@@ -78,13 +79,10 @@ function loadMainPostsAPI(data) {
 
 function* loadMainPosts(action) {
   try {
-    // const result = yield call(loadMainPostsAPI, action.data);
-    yield delay(1000);
-
+    const result = yield call(loadMainPostsAPI, action.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
-      //   data: result.data // 성공 결과
-      data: generateDummyAni(5),
+      data: result.data,
     });
   } catch (e) {
     yield put({
@@ -123,9 +121,36 @@ function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 /************** //End loadPost ****************/
+/************** removePost ****************/
+function removePostAPI(data) {
+  console.log('saga API : ', data);
+  return axios.delete(`/post/${data}`);
+}
 
+function* removePost(action) {
+  try {
+    const result = yield call(removePostAPI, action.data);
+    console.log('result-----');
+    yield put({
+      type: REMOVE_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(err);
+    yield put({
+      type: REMOVE_POST_FAILURE,
+      error: e.response.data,
+    });
+  }
+}
+
+function* watchRemovePost() {
+  yield takeLatest(REMOVE_POST_REQUEST, removePost);
+}
+/*************** // End deletePost  ***************/
 export default function* postSaga() {
   yield all([
+    fork(watchRemovePost),
     fork(watchAddReview),
     fork(watchAddPost),
     fork(watchLoadMainPosts),
