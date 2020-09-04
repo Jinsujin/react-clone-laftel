@@ -7,11 +7,6 @@ const TagsBoxWrap = styled.article`
   padding: 1.5rem;
   border-radius: 4px;
 
-  h4 {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
   p {
     font-size: 0.75rem;
     color: #494c62;

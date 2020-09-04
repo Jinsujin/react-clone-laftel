@@ -159,3 +159,15 @@ h2 {
   font-size: 2rem;
   font-weight: bold;
 }
+
+h3 {
+  font-size: 1.75rem;
+  line-height: 3rem;
+  font-weight: bold;
+  color: #494c62;
+}
+
+h4 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}

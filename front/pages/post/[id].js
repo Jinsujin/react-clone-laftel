@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from '../../components/writePost/next/router';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import wrapper from '../../store/configureStore';

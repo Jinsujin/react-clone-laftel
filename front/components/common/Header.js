@@ -87,7 +87,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/add">
+              <Link href="/write">
                 <a>관리자</a>
               </Link>
             </li>

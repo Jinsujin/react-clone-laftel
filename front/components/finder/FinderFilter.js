@@ -34,9 +34,10 @@ function onChange(checkedValues) {
 }
 
 const optionsGenre = [
+  { label: '판타지', value: 'Fantagy' },
+  { label: '로맨스', value: 'Romance' },
   { label: '액션', value: 'Action' },
   { label: '일상', value: 'Daily' },
-  { label: '로맨스', value: 'Romance' },
   { label: '스포츠', value: 'Sports' },
   { label: '음악', value: 'Music' },
   { label: '범죄', value: 'Crime' },

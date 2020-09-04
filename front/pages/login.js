@@ -10,7 +10,7 @@ const Login = () => {
         <title>로그인 | CloneLaftel</title>
       </Head>
       <AppLayout>
-        <LoginForm setIsLoggedIn={setIsLoggedIn} />
+        <LoginForm />
       </AppLayout>
     </>
   );

@@ -42,12 +42,7 @@ const AniInfosWrap = styled.div`
   flex: 1 1;
   margin-left: 1.1rem;
   position: relative;
-  & > h3 {
-    font-size: 1.75rem;
-    line-height: 3rem;
-    font-weight: bold;
-    color: #494c62;
-  }
+
   & > .tags {
     display: flex;
     align-items: center;
