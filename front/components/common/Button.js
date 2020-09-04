@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/palette';
-import Router from 'next';
+import Link from 'next/link';
 
 const buttonStyle = css`
   border: none;
@@ -44,12 +44,12 @@ const StyledButton = styled.button`
   ${buttonStyle}
 `;
 
-// const StyledLink = styled(Router)`
-//   ${buttonStyle}
-// `;
+const StyledLink = styled(Link)`
+  ${buttonStyle}
+`;
 
 const Button = props => {
-  return props.to ? <StyledButton {...props} /> : <StyledButton {...props} />;
+  return props.to ? <StyledLink {...props} /> : <StyledButton {...props} />;
 };
 
 export default Button;

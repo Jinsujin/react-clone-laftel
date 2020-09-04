@@ -3,9 +3,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/palette';
-import LoginForm from './LoginForm';
-import UserProfile from './UserProfile';
 import { useSelector } from 'react-redux';
+import MyProfile from '../header/MyProfile';
 
 const HeaderWrapper = styled.header`
   z-index: 999999;
@@ -47,7 +46,7 @@ const MenulistWrapper = styled.ul`
 const UtilsBlock = styled.div`
   margin-left: auto;
   a:hover {
-    color: ${palette.violet[7]};
+    color: ${palette.gray[7]};
   }
 `;
 
@@ -92,7 +91,15 @@ const Header = () => {
               </Link>
             </li>
           </MenulistWrapper>
-          <UtilsBlock>{me ? <UserProfile /> : <LoginForm />}</UtilsBlock>
+          <UtilsBlock>
+            {me ? (
+              <MyProfile />
+            ) : (
+              <Link href="/login">
+                <a>로그인/가입</a>
+              </Link>
+            )}
+          </UtilsBlock>
         </Wrapper>
       </HeaderWrapper>
       <Spacer />
