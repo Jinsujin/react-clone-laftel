@@ -16,6 +16,7 @@ import {
   REMOVE_POST_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME } from '../reducers/user';
+import createRequestSaga from '../lib/createRequestSaga';
 
 /************** AddReview ****************/
 // data: {postId, content, starpoint, userId}
@@ -23,20 +24,7 @@ function adReviewtAPI(data) {
   return axios.post(`/post/${data.postId}/review`, data);
 }
 
-function* addReview(action) {
-  try {
-    const result = yield call(adReviewtAPI, action.data);
-    yield put({
-      type: ADD_REVIEW_SUCCESS,
-      data: result.data, // 성공 결과
-    });
-  } catch (e) {
-    yield put({
-      type: ADD_REVIEW_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const addReview = createRequestSaga('ADD_REVIEW', adReviewtAPI);
 
 function* watchAddReview() {
   yield takeLatest(ADD_REVIEW_REQUEST, addReview);
@@ -101,21 +89,7 @@ function loadPostAPI(data) {
   return axios.get(`/post${data}`);
 }
 
-function* loadPost(action) {
-  try {
-    const result = yield call(loadPostAPI, action.data);
-
-    yield put({
-      type: LOAD_POSTS_SUCCESS,
-      data: result.data, // 성공 결과
-    });
-  } catch (e) {
-    yield put({
-      type: LOAD_POSTS_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const loadPost = createRequestSaga('LOAD_POST', loadPostAPI);
 
 function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
@@ -127,22 +101,7 @@ function removePostAPI(data) {
   return axios.delete(`/post/${data}`);
 }
 
-function* removePost(action) {
-  try {
-    const result = yield call(removePostAPI, action.data);
-    console.log('result-----');
-    yield put({
-      type: REMOVE_POST_SUCCESS,
-      data: result.data,
-    });
-  } catch (e) {
-    console.error(err);
-    yield put({
-      type: REMOVE_POST_FAILURE,
-      error: e.response.data,
-    });
-  }
-}
+const removePost = createRequestSaga('REMOVE_POST', removePostAPI);
 
 function* watchRemovePost() {
   yield takeLatest(REMOVE_POST_REQUEST, removePost);

@@ -1,4 +1,5 @@
 import produce from 'immer';
+import { createRequestActionTypes } from '../lib/createRequestSaga';
 
 export const initialState = {
   isLoggedIn: false,
@@ -26,25 +27,33 @@ export const initialState = {
 /**
  * Action types
  */
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+export const [
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
+  LOG_IN_FAILURE,
+] = createRequestActionTypes('LOG_IN');
 
-export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
-export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
-export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+export const [
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILURE,
+] = createRequestActionTypes('LOG_OUT');
 
-export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+export const [
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
+] = createRequestActionTypes('SIGN_UP');
+
+// 페이지 새로고침시, 사용자 정보 불러오기
+export const [
+  LOAD_MY_INFO_REQUEST,
+  LOAD_MY_INFO_SUCCESS,
+  LOAD_MY_INFO_FAILURE,
+] = createRequestActionTypes('LOAD_MY_INFO');
 
 // post 상태 에서 변화가 일어났을때 user 상태 변화
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
-
-// 페이지 새로고침시, 사용자 정보 불러오기
-export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
-export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
-export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 
 /**
  * Action 생성 함수

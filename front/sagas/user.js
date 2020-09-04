@@ -14,27 +14,14 @@ import {
   LOAD_MY_INFO_FAILURE,
   LOAD_MY_INFO_REQUEST,
 } from '../reducers/user';
+import createRequestSaga from '../lib/createRequestSaga';
 
 /************** loadUser ****************/
 function loadMyinfoAPI() {
   return axios.get('/user');
 }
 
-function* loadMyinfo() {
-  try {
-    const result = yield call(loadMyinfoAPI);
-
-    yield put({
-      type: LOAD_MY_INFO_SUCCESS,
-      data: result.data,
-    });
-  } catch (e) {
-    yield put({
-      type: LOAD_MY_INFO_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const loadMyinfo = createRequestSaga('LOAD_MY_INFO', loadMyinfoAPI);
 
 function* watchLoadMyinfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyinfo);
@@ -46,23 +33,7 @@ function signUpAPI(data) {
   return axios.post('/user', data);
 }
 
-function* signUp(action) {
-  try {
-    console.log('signup saga');
-
-    const result = yield call(signUpAPI, action.data);
-    console.log(result);
-
-    yield put({
-      type: SIGN_UP_SUCCESS,
-    });
-  } catch (e) {
-    yield put({
-      type: SIGN_UP_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const signUp = createRequestSaga('SIGN_UP', signUpAPI);
 
 function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
@@ -81,23 +52,9 @@ function logInAPI(data) {
 /**
  * STEP02.
  * 서버 요청이 실패할수 있으므로 try catch 로 감싸줌
+ * logInAPI을 통해 서버에서 요청받은 결과값을 받아올때까지 기다림(call)
  */
-function* logIn(action) {
-  try {
-    // logInAPI을 통해 서버에서 요청받은 결과값을 받아올때까지 기다림(call)
-    const result = yield call(logInAPI, action.data);
-
-    yield put({
-      type: LOG_IN_SUCCESS,
-      data: result.data,
-    });
-  } catch (e) {
-    yield put({
-      type: LOG_IN_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const logIn = createRequestSaga('LOG_IN', logInAPI);
 
 /**
  * STEP01.
@@ -115,19 +72,7 @@ function logOutAPI() {
   return axios.post('/user/logout');
 }
 
-function* logOut() {
-  try {
-    yield call(logOutAPI);
-    yield put({
-      type: LOG_OUT_SUCCESS,
-    });
-  } catch (e) {
-    yield put({
-      type: LOG_OUT_FAILURE,
-      error: e.response.data, // 실패 결과
-    });
-  }
-}
+const logOut = createRequestSaga('LOG_OUT', logOutAPI);
 
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
