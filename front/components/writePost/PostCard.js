@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { StarFilled, CaretRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import RoundedBtn from '../common/RoundedBtn';
 import Router from 'next/router';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import RoundStyledButton from '../common/RoundStyledButton';
 
 const AnimationCardWrapper = styled.div`
   position: relative;
@@ -119,6 +119,7 @@ const PostCard = ({ post }) => {
     // 상세 페이지 이동
     Router.push(`/post/${post.id}`);
   }, []);
+
   return (
     <AnimationCardWrapper>
       <AniImageWrap>
@@ -143,10 +144,10 @@ const PostCard = ({ post }) => {
           <TagLink>스릴러</TagLink>
         </div>
         <p>{post.content}</p>
-        <RoundedBtn onClick={onClick}>
+        <RoundStyledButton onClick={onClick}>
           <CaretRightOutlined />
           지금 재생
-        </RoundedBtn>
+        </RoundStyledButton>
       </AniInfosWrap>
     </AnimationCardWrapper>
   );
